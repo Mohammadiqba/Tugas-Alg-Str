@@ -1,0 +1,59 @@
+#include <iostream>
+using namespace std;
+
+// Struktur Node
+struct Node {
+    int data;
+    Node* left;
+    Node* right;
+};
+
+// Fungsi untuk membuat node baru
+Node* createNode(int data) {
+    Node* newNode = new Node();
+    if (!newNode) {
+        cout << "Error membuat node!" << endl;
+        return NULL;
+    }
+    newNode->data = data;
+    newNode->left = newNode->right = NULL;
+    return newNode;
+}
+
+// Fungsi untuk memasukkan data ke dalam tree
+Node* insertNode(Node* root, int data) {
+    if (root == NULL) {
+        root = createNode(data);
+        return root;
+    }
+    if (data < root->data)
+        root->left = insertNode(root->left, data);
+    else if (data > root->data)
+        root->right = insertNode(root->right, data);
+    return root;
+}
+
+// Fungsi untuk mencetak data secara pre-order
+void preOrderTraversal(Node* root) {
+    if (root == NULL)
+        return;
+    cout << root->data << " ";
+    preOrderTraversal(root->left);
+    preOrderTraversal(root->right);
+}
+
+int main() {
+    Node* root = NULL;
+
+    // Menambahkan bilangan ke dalam tree
+    root = insertNode(root, 12);
+    root = insertNode(root, 16);
+    root = insertNode(root, 20);
+    root = insertNode(root, 24);
+    root = insertNode(root, 32);
+
+    cout << "Urutan bilangan secara pre-order: ";
+    preOrderTraversal(root);
+
+    return 0;
+}
